@@ -1,0 +1,38 @@
+[gd_scene load_steps=9 format=3 uid="uid://bnvfnrib2cugr"]
+
+[ext_resource type="Shader" uid="uid://se28e2oh1a74" path="res://foo.gdshader" id="1_hdvud"]
+[ext_resource type="Script" uid="uid://bb53wdhswqm4u" path="res://foo.gd" id="1_xdias"]
+[ext_resource type="Script" uid="uid://eo7l1mcghgta" path="res://player.gd" id="3_m5qk7"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_hdvud"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_xdias"]
+noise = SubResource("FastNoiseLite_hdvud")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xdias"]
+render_priority = 0
+shader = ExtResource("1_hdvud")
+shader_parameter/a = Color(0.836081, 0.506146, 0.632409, 1)
+shader_parameter/b = SubResource("NoiseTexture2D_xdias")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_m5qk7"]
+material = SubResource("ShaderMaterial_xdias")
+size = Vector2(20, 20)
+subdivide_width = 10
+subdivide_depth = 10
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_qb3cx"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_xdias")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_m5qk7")
+
+[node name="Player" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.285885, 1.61276, -0.520653)
+mesh = SubResource("CapsuleMesh_qb3cx")
+script = ExtResource("3_m5qk7")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.134384, 0, -0.990929, 0, 1, 0, 0.990929, 0, 0.134384, -9.80324, 4.54343, 0)
